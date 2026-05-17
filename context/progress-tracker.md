@@ -5,15 +5,17 @@ change.
 
 ## Current Phase
 
-- [e.g. Not started / In progress / Complete]
+- Complete
 
 ## Current Goal
 
-- [What you are building right now]
+- Add design system and UI primitives components (shadcn/ui)
 
 ## Completed
 
-- None yet.
+- Install and configure shadcn/ui
+- Add shadcn components: Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea
+- Verify theme matching in `globals.css` (Forced default to dark mode)
 
 ## In Progress
 
@@ -21,7 +23,7 @@ change.
 
 ## Next Up
 
-- [First unit to build]
+- [Next unit to build]
 
 ## Open Questions
 
