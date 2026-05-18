@@ -5,11 +5,11 @@ change.
 
 ## Current Phase
 
-- Editor Components & State
+- Database & Prisma Setup
 
 ## Current Goal
 
-- Implement project dialogs and sidebar state per 04-project-dialogs.md
+- Implement Prisma models and client per 05-prisma.md
 
 ## Completed
 
@@ -22,12 +22,15 @@ change.
 - Implement responsive Sign In and Sign Up pages with custom layout
 - Configure `/` redirect logic to `/editor` (authed) or `/sign-in` (unauthed)
 - Add `UserButton` to `EditorNavbar`
-
-## In Progress 
-
 - Project Dialogs (Create, Rename, Delete)
 - Mock project list in Project Sidebar
 - Editor Home blank slate state
+
+## In Progress 
+
+- Create Prisma models (Project, ProjectCollaborator)
+- Setup Prisma Client singleton (`lib/prisma.ts`)
+- Run initial migration
 
 ## Next Up
 
