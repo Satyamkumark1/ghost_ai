@@ -5,11 +5,11 @@ change.
 
 ## Current Phase
 
-- Authentication Implementation
+- Editor Components & State
 
 ## Current Goal
 
-- Implement clerk authentication per 03-auth.md
+- Implement project dialogs and sidebar state per 04-project-dialogs.md
 
 ## Completed
 
@@ -25,7 +25,9 @@ change.
 
 ## In Progress 
 
-- None yet.
+- Project Dialogs (Create, Rename, Delete)
+- Mock project list in Project Sidebar
+- Editor Home blank slate state
 
 ## Next Up
 
