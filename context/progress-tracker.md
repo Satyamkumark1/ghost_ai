@@ -5,11 +5,11 @@ change.
 
 ## Current Phase
 
-- Database & Prisma Setup
+- Backend API Routes
 
 ## Current Goal
 
-- Implement Prisma models and client per 05-prisma.md
+- Implement REST API endpoints for projects per `06-project-api.md`
 
 ## Completed
 
@@ -25,16 +25,23 @@ change.
 - Project Dialogs (Create, Rename, Delete)
 - Mock project list in Project Sidebar
 - Editor Home blank slate state
-
-## In Progress 
-
 - Create Prisma models (Project, ProjectCollaborator)
 - Setup Prisma Client singleton (`lib/prisma.ts`)
 - Run initial migration
+- Create `GET /api/projects` endpoint
+- Create `POST /api/projects` endpoint
+- Create `PATCH /api/projects/[projectId]` endpoint
+- Create `DELETE /api/projects/[projectId]` endpoint
+- Connect API endpoints to UI components
+- Wire up project actions to the frontend components (Editor Home, Sidebar, Dialogs)
+
+## In Progress 
+
+- Begin next specs unit (08-liveblocks-setup.md)
 
 ## Next Up
 
-- Begin work on next specs unit
+- Set up Liveblocks integration
 
 ## Open Questions
 

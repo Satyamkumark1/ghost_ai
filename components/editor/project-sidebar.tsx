@@ -13,19 +13,14 @@ import { useProjectDialogs, Project } from "./project-context";
 interface ProjectSidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  projects: Project[];
 }
 
-const mockProjects: Project[] = [
-  { id: "1", name: "Core Infrastructure", slug: "core-infrastructure", isOwner: true },
-  { id: "2", name: "Auth Service", slug: "auth-service", isOwner: true },
-  { id: "3", name: "Payment Gateway", slug: "payment-gateway", isOwner: false },
-];
-
-export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
+export function ProjectSidebar({ isOpen, onClose, projects }: ProjectSidebarProps) {
   const { openCreateDialog, openRenameDialog, openDeleteDialog } = useProjectDialogs();
 
-  const myProjects = mockProjects.filter((p) => p.isOwner);
-  const sharedProjects = mockProjects.filter((p) => !p.isOwner);
+  const myProjects = projects.filter((p) => p.isOwner);
+  const sharedProjects = projects.filter((p) => !p.isOwner);
 
   const renderProjectItem = (project: Project) => (
     <div

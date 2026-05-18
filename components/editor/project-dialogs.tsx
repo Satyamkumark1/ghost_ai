@@ -32,6 +32,7 @@ function RenameDialogContent({
   onOpenChange: (open: boolean) => void;
 }) {
   const [renameName, setRenameName] = useState(project.name);
+  const { renameProject, isPending } = useProjectActions();
 
   // Reset name when reopened
   useEffect(() => {
@@ -41,9 +42,9 @@ function RenameDialogContent({
     }
   }, [isOpen, project.name]);
 
-  const handleRenameSubmit = (e: React.FormEvent) => {
+  const handleRenameSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onOpenChange(false);
+    await renameProject(project.id, renameName);
   };
 
   return (
@@ -64,18 +65,23 @@ function RenameDialogContent({
             onChange={(e) => setRenameName(e.target.value)}
             placeholder="Project Name"
             required
+            disabled={isPending}
           />
         </div>
         <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+          <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isPending}>
             Cancel
           </Button>
-          <Button type="submit">Save Changes</Button>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Saving..." : "Save Changes"}
+          </Button>
         </DialogFooter>
       </form>
     </DialogContent>
   );
 }
+
+import { useProjectActions, generateRoomId } from "@/hooks/use-project-actions";
 
 export function ProjectDialogs() {
   const {
@@ -88,20 +94,30 @@ export function ProjectDialogs() {
     selectedProject,
   } = useProjectDialogs();
 
+  const { createProject, deleteProject, isPending } = useProjectActions();
+
   // Create Project State
   const [createName, setCreateName] = useState("");
-  const createSlug = generateSlug(createName);
+  
+  // Calculate slug and ID only when dialog is open and name changes
+  const [createRoomId, setCreateRoomId] = useState("");
+  
+  useEffect(() => {
+    if (isCreateOpen) {
+      setCreateRoomId(generateRoomId(createName || "Untitled Project"));
+    }
+  }, [createName, isCreateOpen]);
 
-  const handleCreateSubmit = (e: React.FormEvent) => {
+  const handleCreateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock submit
-    setIsCreateOpen(false);
+    await createProject(createName, createRoomId);
     setCreateName("");
   };
 
-  const handleDeleteSubmit = () => {
-    // Mock delete
-    setIsDeleteOpen(false);
+  const handleDeleteSubmit = async () => {
+    if (selectedProject) {
+      await deleteProject(selectedProject.id);
+    }
   };
 
   return (
@@ -125,21 +141,24 @@ export function ProjectDialogs() {
                 onChange={(e) => setCreateName(e.target.value)}
                 placeholder="e.g. Core Infrastructure"
                 required
+                disabled={isPending}
               />
             </div>
             {createName && (
               <div className="text-sm text-muted-foreground flex items-center gap-1">
-                <span>Slug:</span>
+                <span>Room ID:</span>
                 <code className="bg-muted px-1.5 py-0.5 rounded text-xs">
-                  {createSlug}
+                  {createRoomId}
                 </code>
               </div>
             )}
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setIsCreateOpen(false)}>
+              <Button type="button" variant="outline" onClick={() => setIsCreateOpen(false)} disabled={isPending}>
                 Cancel
               </Button>
-              <Button type="submit">Create</Button>
+              <Button type="submit" disabled={isPending}>
+                {isPending ? "Creating..." : "Create"}
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>
@@ -166,11 +185,11 @@ export function ProjectDialogs() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4">
-            <Button variant="outline" onClick={() => setIsDeleteOpen(false)}>
+            <Button variant="outline" onClick={() => setIsDeleteOpen(false)} disabled={isPending}>
               Cancel
             </Button>
-            <Button variant="destructive" onClick={handleDeleteSubmit}>
-              Delete Project
+            <Button variant="destructive" onClick={handleDeleteSubmit} disabled={isPending}>
+              {isPending ? "Deleting..." : "Delete Project"}
             </Button>
           </DialogFooter>
         </DialogContent>

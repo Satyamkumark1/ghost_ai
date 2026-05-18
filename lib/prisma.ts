@@ -6,13 +6,17 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 const connectionString = `${process.env.DATABASE_URL}`
 
 const prismaClientSingleton = () => {
-  if (connectionString.startsWith("prisma+postgres://")) {
-    return new PrismaClient({ accelerateUrl: connectionString }).$extends(withAccelerate())
-  }
+  const baseClient = (() => {
+    if (connectionString.startsWith("prisma+postgres://")) {
+      return new PrismaClient({ accelerateUrl: connectionString })
+    }
+    
+    const pool = new Pool({ connectionString })
+    const adapter = new PrismaPg(pool)
+    return new PrismaClient({ adapter })
+  })()
   
-  const pool = new Pool({ connectionString })
-  const adapter = new PrismaPg(pool)
-  return new PrismaClient({ adapter })
+  return baseClient.$extends(withAccelerate())
 }
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
