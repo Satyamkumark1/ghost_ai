@@ -10,9 +10,10 @@ interface EditorNavbarProps {
   projectName?: string;
   projectId?: string;
   isOwner?: boolean;
+  toggleAiSidebar: () => void;
 }
 
-export function EditorNavbar({ isSidebarOpen, toggleSidebar, projectName, projectId, isOwner }: EditorNavbarProps) {
+export function EditorNavbar({ isSidebarOpen, toggleSidebar, projectName, projectId, isOwner, toggleAiSidebar }: EditorNavbarProps) {
   const [isShareOpen, setIsShareOpen] = useState(false);
 
   return (
@@ -60,7 +61,7 @@ export function EditorNavbar({ isSidebarOpen, toggleSidebar, projectName, projec
               <LayoutTemplate className="h-4 w-4" />
               Templates
             </Button>
-            <Button size="sm" className="hidden sm:flex gap-2 h-8 bg-cyan-400 hover:bg-cyan-500 text-black font-medium">
+            <Button size="sm" className="hidden sm:flex gap-2 h-8 bg-cyan-400 hover:bg-cyan-500 text-black font-medium" onClick={toggleAiSidebar}>
               <Sparkles className="h-4 w-4" />
               AI
             </Button>

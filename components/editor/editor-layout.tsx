@@ -5,6 +5,7 @@ import { EditorNavbar } from "./editor-navbar";
 import { ProjectSidebar } from "./project-sidebar";
 import { ProjectDialogsProvider, Project } from "./project-context";
 import { ProjectDialogs } from "./project-dialogs";
+import { AiSidebar } from "./ai-sidebar";
 
 interface EditorLayoutProps {
   children: React.ReactNode;
@@ -16,6 +17,10 @@ interface EditorLayoutProps {
 
 export function EditorLayout({ children, projects, projectName, currentRoomId, isOwner }: EditorLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAiSidebarOpen, setIsAiSidebarOpen] = useState(false);
+
+  const toggleAiSidebar = () => setIsAiSidebarOpen((prev) => !prev);
+  const closeAiSidebar = () => setIsAiSidebarOpen(false);
 
   return (
     <ProjectDialogsProvider>
@@ -26,6 +31,7 @@ export function EditorLayout({ children, projects, projectName, currentRoomId, i
           projectName={projectName}
           projectId={currentRoomId}
           isOwner={isOwner}
+          toggleAiSidebar={toggleAiSidebar}
         />
         <div className="flex flex-1 overflow-hidden pt-14 p-3 gap-3">
           <ProjectSidebar 
@@ -37,6 +43,7 @@ export function EditorLayout({ children, projects, projectName, currentRoomId, i
           <main className="flex-1 w-full overflow-hidden flex">
             {children}
           </main>
+          <AiSidebar isOpen={isAiSidebarOpen} onClose={closeAiSidebar} />
         </div>
       </div>
       <ProjectDialogs />
