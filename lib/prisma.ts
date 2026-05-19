@@ -14,11 +14,15 @@ const prismaClientSingleton = () => {
     }
     
     const config = parse(connectionString)
-    // Explicitly set SSL to avoid the pg-connection-string warning
-    // verify-full corresponds to rejectUnauthorized: true
-    config.ssl = { rejectUnauthorized: true }
     
-    const pool = new Pool(config)
+    const pool = new Pool({
+      user: config.user ?? undefined,
+      password: config.password ?? undefined,
+      host: config.host ?? undefined,
+      port: config.port ? parseInt(config.port, 10) : undefined,
+      database: config.database ?? undefined,
+      ssl: { rejectUnauthorized: true }
+    })
     const adapter = new PrismaPg(pool)
     return new PrismaClient({ adapter })
   })()

@@ -86,6 +86,7 @@ const DEFAULT_SIZE_BY_SHAPE: Record<NodeShape, Size> = {
   cylinder: { width: 150, height: 95 },
   pill: { width: 170, height: 72 },
   hexagon: { width: 150, height: 90 },
+  text: { width: 120, height: 40 },
 };
 const DEFAULT_MAX_OUTPUT_TOKENS = 2048;
 
