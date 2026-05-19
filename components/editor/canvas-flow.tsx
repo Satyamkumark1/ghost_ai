@@ -12,6 +12,8 @@ import { ZoomIn, ZoomOut, Maximize, Undo2, Redo2 } from "lucide-react";
 import { CanvasEdge } from "./edges/canvas-edge";
 import { StarterTemplatesModal } from "./starter-templates-modal";
 import { CanvasTemplate } from "./starter-templates";
+import { useCanvasAutosave } from "@/hooks/use-canvas-autosave";
+import { useParams } from "next/navigation";
 import "@xyflow/react/dist/style.css";
 import "@liveblocks/react-ui/styles.css";
 import "@liveblocks/react-flow/styles.css";
@@ -115,6 +117,10 @@ function Flow() {
     [screenToFlowPosition, setNodes]
   );
 
+  const params = useParams();
+  const projectId = (Array.isArray(params?.roomId) ? params.roomId[0] : params?.roomId) ?? "";
+  const saveStatus = useCanvasAutosave({ projectId, nodes, edges });
+
   return (
     <div className="w-full h-full relative">
       <ReactFlow
@@ -202,6 +208,12 @@ function Flow() {
               >
                 <Redo2 className="h-4 w-4" />
               </Button>
+            </div>
+            <div className="w-px h-4 bg-white/10 mx-1" />
+            <div className="flex items-center text-xs text-zinc-400 min-w-15 justify-center">
+              {saveStatus === "saving" && "Saving..."}
+              {saveStatus === "saved" && "Saved"}
+              {saveStatus === "error" && <span className="text-red-400">Error</span>}
             </div>
           </div>
         </Panel>

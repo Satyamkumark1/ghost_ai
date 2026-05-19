@@ -48,6 +48,12 @@ change.
 - Implement custom edge behavior and inline labels per `16-edge-behavior.md`
 - Add zoom/undo canvas control bar and keyboard shortcuts per `17-canvas-ergonomics.md`
 - Implement starter templates library and import modal per `18-starter-template.md`
+- Implement canvas autosave and load per `21-canvas-autosave.md`
+  - Use `@vercel/blob` for storage
+  - Add API routes for save/load
+  - Add autosave hook with debounce
+  - Show save status in editor
+  - Use Prisma for blob URL metadata
 
 ## In Progress 
 
