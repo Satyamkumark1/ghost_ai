@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma generate"
-
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.75",
@@ -26,6 +25,7 @@
     "@prisma/extension-accelerate": "^3.0.1",
     "@trigger.dev/react-hooks": "^4.4.6",
     "@trigger.dev/sdk": "^4.4.6",
+    "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.4.0",
     "@xyflow/react": "^12.10.2",
     "ai": "^6.0.185",
