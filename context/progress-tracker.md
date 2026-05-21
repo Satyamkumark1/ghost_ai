@@ -136,6 +136,7 @@ change.
   - Refactored layout controls: Zoom/History/Grid on bottom-left, Import/Export/Saved status on bottom-right, basic shapes in a left-aligned vertical sidebar, and containers/special/text shapes in a bottom-center horizontal bar to prevent overlap and match standard diagramming interfaces.
   - Fixed Clerk authentication UI readability issues (low contrast text and icons on dark backgrounds in UserButton popover, UserProfile modal, and Sign-in/Sign-up cards) by updating config to use Clerk v7 CSS variables, adding fallback variables for compatibility, setting `cssLayerName="clerk"` to prevent CSS conflicts, and applying body-prepended, high-specificity global CSS overrides targeting action buttons, nav items, and their descendant elements.
 - Resolved Prisma Client generation and Vercel deployment issue by migrating the generator provider in `prisma/schema.prisma` from the legacy `prisma-client-js` to the standard Prisma v7 `prisma-client`, outputting the client outside the scanned `prisma/` folder to `../generated/prisma` to avoid recursive schema parsing conflicts, updating the import path in `lib/prisma.ts`, and updating `.gitignore`.
+- Fixed Vercel build crash caused by invalid or placeholder Liveblocks secret keys by adding active validation for the required `"sk_"` prefix in `lib/liveblocks.ts` and falling back to a dummy key during build/evaluation time if needed.
 
 ## In Progress 
 

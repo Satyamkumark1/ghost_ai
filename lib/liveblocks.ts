@@ -4,10 +4,13 @@ const globalForLiveblocks = globalThis as unknown as {
   liveblocks: Liveblocks | undefined;
 };
 
+const secretKey = process.env.LIVEBLOCKS_SECRET_KEY;
+const isValidSecret = typeof secretKey === "string" && secretKey.startsWith("sk_");
+
 export const liveblocks =
   globalForLiveblocks.liveblocks ??
   new Liveblocks({
-    secret: process.env.LIVEBLOCKS_SECRET_KEY || "sk_dev_dummy",
+    secret: isValidSecret ? secretKey : "sk_dev_dummy",
   });
 
 if (process.env.NODE_ENV !== "production") globalForLiveblocks.liveblocks = liveblocks;
