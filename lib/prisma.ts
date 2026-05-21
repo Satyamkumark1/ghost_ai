@@ -1,4 +1,4 @@
-import { PrismaClient } from '../prisma/generated'
+import { PrismaClient } from '@/generated/prisma/client'
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { withAccelerate } from '@prisma/extension-accelerate'
