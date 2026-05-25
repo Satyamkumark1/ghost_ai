@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Quartz-Ai
 
-## Getting Started
+Quartz-Ai is a real-time collaborative system design workspace. It allows users to describe systems in natural language, while an AI agent maps the architecture on a shared canvas. Collaborators can refine the design in real-time and generate professional technical specifications from the resulting graph.
 
-First, run the development server:
+## 🚀 Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Collaborative Canvas**: Real-time shared workspace using Liveblocks and React Flow.
+- **AI Architecture Generation**: Generate system designs from natural language prompts using AI agents.
+- **Starter Templates**: A library of prebuilt system design patterns (monolith, microservices, serverless, etc.).
+- **Spec Generation**: Automatically convert your canvas graph into a professional Markdown technical specification.
+- **Project Management**: Create, manage, and share architecture projects with collaborators.
+- **Live Presence**: Multi-user cursors and presence indicators for seamless teamwork.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Real-time Collaboration**: [Liveblocks](https://liveblocks.io/)
+- **Canvas Engine**: [React Flow](https://reactflow.dev/) (@xyflow/react)
+- **Database & ORM**: [Prisma](https://www.prisma.io/) with PostgreSQL
+- **Authentication**: [Clerk](https://clerk.com/)
+- **AI**: [Vercel AI SDK](https://sdk.vercel.ai/)
+- **Background Tasks**: [Trigger.dev](https://trigger.dev/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **UI Components**: Radix UI & [shadcn/ui](https://ui.shadcn.com/)
+
+## 🏁 Getting Started
+
+### Prerequisites
+
+- Node.js (Latest LTS recommended)
+- PostgreSQL database
+- Clerk Account
+- Liveblocks Account
+- Trigger.dev Account
+- Google / OpenRouter API Key for AI features
+
+### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd ghost_ai
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**:
+   Create a `.env` file in the root directory and add the necessary environment variables:
+   ```env
+   # Database
+   DATABASE_URL="postgresql://..."
+
+   # Clerk Auth
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_...
+   CLERK_SECRET_KEY=sk_...
+
+   # Liveblocks
+   LIVEBLOCKS_SECRET_KEY=sk_...
+
+   # Trigger.dev
+   TRIGGER_SECRET_KEY=tr_...
+
+   # AI Providers
+   GOOGLE_GENERATIVE_AI_API_KEY=...
+   # or
+   OPENROUTER_API_KEY=...
+   ```
+
+4. **Database Migration**:
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+6. **Run Trigger.dev worker**:
+   ```bash
+   npx trigger.dev@latest dev
+   ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📖 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/`: Next.js application routes and API endpoints.
+- `components/`: Reusable UI components and editor-specific logic.
+- `context/`: Project documentation and feature specifications.
+- `hooks/`: Custom React hooks for canvas and project actions.
+- `lib/`: Shared utility functions and client initializations (Prisma, Liveblocks).
+- `prisma/`: Database schema and migrations.
+- `trigger/`: Background task definitions for AI generation.
+- `types/`: TypeScript type definitions.
 
-## Learn More
+## 📜 License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is private and proprietary.
