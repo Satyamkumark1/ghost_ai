@@ -14,6 +14,11 @@ export async function GET() {
       where: {
         ownerId: userId,
       },
+      cacheStrategy: {
+        ttl: 60,
+        swr: 30,
+        tags: [`projects:owned:${userId}`],
+      },
       orderBy: {
         createdAt: "desc",
       },
@@ -44,6 +49,11 @@ export async function POST(req: Request) {
         name: name || "Untitled Project",
         description: description || null,
       },
+    });
+
+    // Invalidate the owned projects cache
+    await prisma.$accelerate.invalidate({
+      tags: [`projects:owned:${userId}`],
     });
 
     return NextResponse.json(project);

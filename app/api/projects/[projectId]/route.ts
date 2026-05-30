@@ -27,6 +27,7 @@ export async function PATCH(
       where: {
         id: projectId,
       },
+      
     });
 
     if (!project) {
@@ -45,6 +46,11 @@ export async function PATCH(
         name: name !== undefined ? name : project.name,
         description: description !== undefined ? description : project.description,
       },
+    });
+
+    // Invalidate the owned projects cache
+    await prisma.$accelerate.invalidate({
+      tags: [`projects:owned:${userId}`],
     });
 
     return NextResponse.json(updatedProject);
@@ -72,6 +78,13 @@ export async function DELETE(
       where: {
         id: projectId,
       },
+      include: {
+        collaborators: {
+          select: {
+            email: true,
+          },
+        },
+      },
     });
 
     if (!project) {
@@ -82,10 +95,23 @@ export async function DELETE(
       return new NextResponse("Forbidden", { status: 403 });
     }
 
+    const collaboratorEmails = project.collaborators.map((c) => c.email);
+
     const deletedProject = await prisma.project.delete({
       where: {
         id: projectId,
       },
+    });
+
+    // Invalidate the owned projects cache for the owner
+    // and shared projects cache for all collaborators
+    const tagsToInvalidate = [
+      `projects:owned:${userId}`,
+      ...collaboratorEmails.map((email) => `projects:shared:${email}`),
+    ];
+
+    await prisma.$accelerate.invalidate({
+      tags: tagsToInvalidate,
     });
 
     return NextResponse.json(deletedProject);

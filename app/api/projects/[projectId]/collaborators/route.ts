@@ -115,6 +115,11 @@ export async function POST(
       },
     });
 
+    // Invalidate the shared projects cache for the new collaborator
+    await prisma.$accelerate.invalidate({
+      tags: [`projects:shared:${email.toLowerCase()}`],
+    });
+
     return NextResponse.json(collaborator);
   } catch (error) {
     console.error("[COLLABORATORS_POST]", error);
