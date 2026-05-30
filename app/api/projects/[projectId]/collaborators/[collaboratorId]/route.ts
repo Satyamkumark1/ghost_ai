@@ -37,6 +37,11 @@ export async function DELETE(
       },
     });
 
+    // Invalidate the shared projects cache for the removed collaborator
+    await prisma.$accelerate.invalidate({
+      tags: [`projects:shared:${deletedCollaborator.email}`],
+    });
+
     return NextResponse.json(deletedCollaborator);
   } catch (error) {
     console.error("[COLLABORATORS_DELETE]", error);
